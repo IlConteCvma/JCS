@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -32,8 +33,7 @@ public class JCSLightLoadUnitTest {
 		
 		return Arrays.asList(new Object[][] {
 			
-			{20000,"/TestSimpleLoad.ccf","testCache1"},
-			{19000,"/TestSimpleLoad.ccf","testCache1"}
+			{20000,"/TestSimpleLoad.ccf","testCache1"}
 			
 		});
 		
@@ -52,12 +52,16 @@ public class JCSLightLoadUnitTest {
     {
         JCS.setConfigFilename( this.confFile );
         File file = new File(confFile);
+        URL url = getClass().getResource("/TestSimpleLoad.ccf");
+        System.out.println(url.getPath());
         System.out.println(file.getCanonicalPath());
         this.jcs = JCS.getInstance( this.istance );
         System.out.println(jcs.getStatistics().getRegionName());
         ICompositeCacheAttributes cattr = jcs.getCacheAttributes();
         System.out.println(cattr.getMaxObjects());
-        
+        cattr.setMaxObjects( 20002 );
+        jcs.setCacheAttributes( cattr );
+        System.out.println(cattr.getMaxObjects());
     }
 	
 
