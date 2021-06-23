@@ -5,8 +5,6 @@ package it.uniroma2.dicii.isw2.jcs.paramTests;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.io.File;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -51,17 +49,10 @@ public class JCSLightLoadUnitTest {
     public void configure() throws Exception
     {
         JCS.setConfigFilename( this.confFile );
-        File file = new File(confFile);
-        URL url = getClass().getResource("/TestSimpleLoad.ccf");
-        System.out.println(url.getPath());
-        System.out.println(file.getCanonicalPath());
-        this.jcs = JCS.getInstance( this.istance );
-        System.out.println(jcs.getStatistics().getRegionName());
+        this.jcs = JCS.getInstance( this.istance );        
         ICompositeCacheAttributes cattr = jcs.getCacheAttributes();
-        System.out.println(cattr.getMaxObjects());
-        cattr.setMaxObjects( 20002 );
-        jcs.setCacheAttributes( cattr );
-        System.out.println(cattr.getMaxObjects());
+        cattr.setMaxObjects( items + 1 );
+        this.jcs.setCacheAttributes( cattr );
     }
 	
 

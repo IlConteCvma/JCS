@@ -5,7 +5,7 @@
  
     <groupId>it.uniroma2.dicii.isw2</groupId>
     <artifactId>jcs</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
  
     <name>jcs</name>
@@ -80,6 +80,16 @@
                 <artifactId>maven-install-plugin</artifactId>
                 <version>3.0.0-M1</version>
             </plugin>
+            <plugin>
+		        <groupId>org.sonarsource.scanner.maven</groupId>
+		        <artifactId>sonar-maven-plugin</artifactId>
+		        <version>3.9.0.2155</version>
+        	</plugin>
+	        <plugin>
+	          <groupId>org.jacoco</groupId>
+	          <artifactId>jacoco-maven-plugin</artifactId>
+	          <version>0.8.7</version>
+	        </plugin>
         </plugins>
         
         <testResources>
@@ -93,4 +103,35 @@
         </testResources>
         
     </build>
+    
+    <profiles>
+    	<profile>
+    		<id>coverage</id>
+    		<activation>
+    			<activeByDefault>true</activeByDefault>
+    		</activation>
+    		<build>
+    			<plugins>
+    				<plugin>
+			            <groupId>org.jacoco</groupId>
+			            <artifactId>jacoco-maven-plugin</artifactId>
+			            <executions>
+			              <execution>
+			                <id>prepare-agent</id>
+			                <goals>
+			                  <goal>prepare-agent</goal>
+			                </goals>
+			              </execution>
+			              <execution>
+			                <id>report</id>
+			                <goals>
+			                  <goal>report</goal>
+			                </goals>
+			              </execution>
+			            </executions>
+			         </plugin>
+    			</plugins>
+    		</build>
+    	</profile>
+    </profiles>
 </project>
