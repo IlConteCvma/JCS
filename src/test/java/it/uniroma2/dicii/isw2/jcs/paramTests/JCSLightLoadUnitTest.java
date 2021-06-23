@@ -10,6 +10,7 @@ import java.util.Collection;
 
 import org.apache.jcs.JCS;
 import org.apache.jcs.access.CacheAccess;
+import org.apache.jcs.engine.behavior.ICompositeCacheAttributes;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,8 @@ public class JCSLightLoadUnitTest {
 		
 		return Arrays.asList(new Object[][] {
 			
-			{20000,"/TestSimpleLoad.ccf","testCache1"}
+			{20000,"/TestSimpleLoad.ccf","testCache1"},
+			{19000,"/TestSimpleLoad.ccf","testCache1"}
 			
 		});
 		
@@ -49,6 +51,9 @@ public class JCSLightLoadUnitTest {
     {
         JCS.setConfigFilename( this.confFile );
         this.jcs = JCS.getInstance( this.istance );
+        ICompositeCacheAttributes cattr = jcs.getCacheAttributes();
+        System.out.println(cattr.getMaxObjects());
+        
     }
 	
 
@@ -57,12 +62,12 @@ public class JCSLightLoadUnitTest {
 	public void testSimpleLoad()
 	        throws Exception
 	    {
-	     
+	     	
 	        for ( int i = 1; i <= items; i++ )
 	        {
 	            jcs.put( i + ":key", "data" + i );
 	        }
-
+	        
 	        for ( int i = items; i > 0; i-- )
 	        {
 	            String res = (String) jcs.get( i + ":key" );
