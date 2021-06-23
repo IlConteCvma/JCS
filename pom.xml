@@ -82,14 +82,15 @@
             </plugin>
         </plugins>
         
-        <resources>
-        	<resource>
+        <testResources>
+        	<testResource>
         		<directory>src/test-conf</directory>
         		<includes>
         			<include>**/*.ccf</include>
         			<include>**/*.properties</include>
         		</includes>
-        	</resource>
-        </resources>
+        	</testResource>
+        </testResources>
+        
     </build>
 </project>
