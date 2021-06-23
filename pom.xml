@@ -84,7 +84,7 @@
         
         <testResources>
         	<testResource>
-        		<directory>src/test-conf</directory>
+        		<directory>${basedir}/src/test-conf</directory>
         		<includes>
         			<include>**/*.ccf</include>
         			<include>**/*.properties</include>
