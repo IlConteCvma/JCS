@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.jcs.JCS;
+import org.apache.jcs.access.CacheAccess;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,7 @@ public class JCSLightLoadUnitTest {
 	private int items;
 	private String confFile;
 	private String istance;
-	private JCS jcs;
+	private CacheAccess jcs;
 	
 	@Parameters
 	public static Collection<Object[]> getTestParameters(){
