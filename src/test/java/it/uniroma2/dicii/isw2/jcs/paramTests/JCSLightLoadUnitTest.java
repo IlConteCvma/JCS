@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.jcs.JCS;
-import org.apache.jcs.access.CacheAccess;
 import org.apache.jcs.engine.behavior.ICompositeCacheAttributes;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,29 +17,34 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 
+
 @RunWith(Parameterized.class)
 public class JCSLightLoadUnitTest {
 	
 	private int items;
+	private int removedItem;
+	private String removedString;
 	private String confFile;
 	private String istance;
-	private CacheAccess jcs;
+	private JCS jcs;
+	
 	
 	@Parameters
 	public static Collection<Object[]> getTestParameters(){
 		
 		return Arrays.asList(new Object[][] {
 			
-			{20000,"/TestSimpleLoad.ccf","testCache1"}
+			{20000,300,"/TestSimpleLoad.ccf","testCache1"}
 			
 		});
 		
 	}
 	
 	
-	public JCSLightLoadUnitTest (int items,String confFile,String istance) throws Exception {
+	public JCSLightLoadUnitTest (int items,int removedItem,String confFile,String istance) throws Exception {
 		
 		this.items = items;
+		this.removedItem = removedItem;
 		this.confFile = confFile;
 		this.istance = istance;
 	}
@@ -48,8 +52,10 @@ public class JCSLightLoadUnitTest {
 	@Before
     public void configure() throws Exception
     {
+		this.removedString = String.valueOf(this.removedItem) + ":key";
         JCS.setConfigFilename( this.confFile );
-        this.jcs = JCS.getInstance( this.istance );        
+        this.jcs = JCS.getInstance( this.istance );
+        //The configuration on Travis doesn't load maxObject 
         ICompositeCacheAttributes cattr = jcs.getCacheAttributes();
         cattr.setMaxObjects( items + 1 );
         this.jcs.setCacheAttributes( cattr );
@@ -77,8 +83,8 @@ public class JCSLightLoadUnitTest {
 	        }
 
 	        // test removal
-	        jcs.remove( "300:key" );
-	        assertNull( jcs.get( "300:key" ) );
+	        jcs.remove( this.removedString );
+	        assertNull( jcs.get( this.removedString ) );
 
 	    }
 	
